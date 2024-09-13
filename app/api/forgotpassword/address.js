@@ -1,0 +1,1 @@
+export const connect="mongodb+srv://Toconnect:deekshi@cluster0.xpni6pr.mongodb.net/expenditure_manager?retryWrites=true&w=majority&appName=Cluster0";

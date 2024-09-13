@@ -1,49 +1,44 @@
 "use client"
+import { Result } from "postcss";
 import { useState } from "react"
-import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { MdCopyAll } from "react-icons/md";
+import { MdFileDownloadDone } from "react-icons/md";
+import { useRef } from "react";
 
 export default function Example() {
   const [name, setname] = useState()
   const [email, setemail] = useState()
-  const [password, setpassword] = useState()
+  const [password, setpassword] = useState(" ")
+  const copying = useRef("")
+  const copyed = useRef("")
+  const copies=()=>{
+    navigator.clipboard.writeText(password);
+    copyed.current.style.display = "block"
+    copying.current.style.display="none"
+  }
   
   const Submit=async(e)=>{
     e.preventDefault()
-    console.log(name,password,email);
-    const data= await fetch("/api", {
+    const data= await fetch("/api/forgotpassword", {
       method: "post",
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({name,password,email})
+      body: JSON.stringify({name,email})
     })
     if(data.ok){
-      toast("Done!")
-      const data = await fetch("/api/addexpenditure", {
-        method: "post",
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({email})
-      })
-      setemail("")
-      setname("")
-      setpassword("")
-      setTimeout(() => {
-        window.location.replace("/")
-      }, 2000);
+      const result=await data.json()
+      console.log(result.password);
+      setpassword(result.password)
       
-
     }
 
   }
     return (
-      <div className="flex min-h-screen bg-[#f7f7f7] flex-1 flex-col  justify-center px-6 py-12 lg:px-[20%]">
-        <div className="flex h-full border bg-white shadow-lg shadow-slate-200 md:shadow-xl md:shadow-slate-200 flex-1 flex-col justify-center px-6  py-12 lap:py-0 lap:pb-6 lg:px-8">
-        <ToastContainer />
+      <div className="flex min-h-screen lap:h-[100vh] bg-[#f7f7f7] flex-1 flex-col  justify-center px-6 py-12 lap:py-0 ">
+        <div className="flex min-h-full lap:h-[80vh] border bg-white shadow-lg shadow-slate-200 lap:shadow-xl lap:shadow-slate-200 flex-1 flex-col justify-center px-6  py-12 lap:py-2 lg:px-8">
           <div className="lap:mx-auto lap:w-full bg-white lap:max-w-sm">
             <img
               alt="Expenditure manager"
@@ -51,7 +46,7 @@ export default function Example() {
               className="mx-auto h-10 bg-white w-auto"
             />
             <h2 className="mt-10 text-center text-2xl bg-white font-bold leading-9 tracking-tight text-gray-900">
-             Just Sign up
+             Get your Password
             </h2>
           </div>
   
@@ -90,35 +85,15 @@ export default function Example() {
                   />
                 </div>
               </div>
-  
-              <div className="bg-white">
-                <div className="flex bg-white items-center justify-between">
-                  <label htmlFor="password" className="block bg-white text-sm font-medium leading-6 text-gray-900">
-                    Password
-                  </label>
-                  
-                </div>
-                <div className="mt-2 bg-white">
-                  <input
-                    id="password"
-                    name="password"
-                    value={password}
-                    onChange={(e)=>{setpassword(e.target.value)}}
-                    type="password"
-                    required
-                    autoComplete="current-password"
-                    className="block px-4 w-full bg-white rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 lap:text-sm lap:leading-6"
-                  />
-                </div>
-              </div>
-  
               <div>
                 <button
                   type="submit"
                   className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                 >
-                  Sign up
+                  Get Password
                 </button>
+                {((password!=" ") && (password!="User not found" && password!="Invalid Name")) &&  <div className="mt-6 py-6  px-10 text-md font-semibold text-gray-300 flex justify-around bg-black"><div className="bg-transparent">{password}</div>  <button ref={copying} onClick={()=>{copies()}}><MdCopyAll className="bg-transparent w-7 h-7"/></button><button className="hidden" ref={copyed} ><MdFileDownloadDone  className="bg-transparent w-7 h-7"/></button></div>}
+                {(password==="User not found" || password==="Invalid Name")&& <div className="mt-6 py-6  px-10 text-lg font-serif font-semibold text-red-600 flex justify-around bg-transparent">Enter Poper Details...</div>}
               </div>
             </form>
   

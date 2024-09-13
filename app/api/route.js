@@ -10,7 +10,6 @@ export async function POST(req){
 	await mongoose.connect(connect)
 	const password01=await new userid({name,email,password:CryptoJS.AES.encrypt(password, '@deekshigowda').toString()});
 	const result=await password01.save();
-	console.log("hi i am put");
 	return NextResponse.json({result,success:true});
 	
 }

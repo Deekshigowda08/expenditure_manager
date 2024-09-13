@@ -313,17 +313,17 @@ export default function Home() {
           onChange={(e) => setMoney(e.target.value)}
           value={money}
           required
-          className="input-shadow1 outline-black border-0 text-white lap:p-[1vw] w-[55%] px-5 py-2 lap:px-[1.5vw] lap:w-[24vw] bg-black bg-opacity-90 rounded-[6vw] lap:placeholder:text-[1vw] placeholder:text-sm font-semibold placeholder:text-white placeholder:opacity-70"
+          className="input-shadow1 outline-black border-0 text-white lap:p-[1vw] w-[40%] px-5 py-2 lap:px-[1.5vw] lap:w-[24vw] bg-black bg-opacity-90 rounded-[6vw] lap:placeholder:text-[1vw] placeholder:text-sm font-semibold placeholder:text-white placeholder:opacity-70"
           type="number"
           placeholder="Amount spent"
         />
         <input
           onChange={(e) => setDate(e.target.value)}
           value={date}
-          className="input-shadow1 outline-black border-0 lap:text-black w-[45%] py-2 px-4 lap:p-[1vw] lap:px-[1.5vw] lap:w-[24vw] bg-white bg-opacity-90 rounded-[6vw] lap:placeholder:text-[1vw] lap:text-md text-sm font-semibold text-gray-800 placeholder:text-black placeholder:opacity-70"
+          className="input-shadow1 outline-black border-0 lap:text-black w-[55%] py-2 px-4 lap:p-[1vw] lap:px-[1.5vw] lap:w-[24vw] bg-white bg-opacity-90 rounded-[6vw] lap:placeholder:text-[1vw] lap:text-md text-sm  font-semibold text-gray-800 placeholder:text-black placeholder:opacity-70"
           type="date"
           required
-          placeholder="Date"
+          
         />
       </div>
       <div className="flex w-full m-2 lap:m-0 gap-4 lap:w-fit lap:gap-[1vw] bg-white">
